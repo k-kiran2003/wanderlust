@@ -1,6 +1,6 @@
 // require('dotenv').config(); // This loads the .env variables
 require('dotenv').config();
-console.log("MongoDB URI:", process.env.ATLAS); // 👈 TEMP LOG THIS
+
 
 
 // EXPRESS
