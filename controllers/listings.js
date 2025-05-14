@@ -33,7 +33,7 @@ module.exports.showListing=  (async (req, res) => {
        populate:{
             path:"author",
         }}
-    ).populate("owner");
+    ).populate("owner").populate("category");
     if (!data) {
         req.flash("error", "The requested Listing doesn't exists");
         res.redirect("/listing");
@@ -85,3 +85,25 @@ module.exports.destroyListing = (async (req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect("/listing");
 });
+//search
+module.exports.category = async (req, res) => {
+    try {
+        const { category } = req.query;
+
+        const allowedCategories = [
+            "Mountain-city", "Mountain", "Castle", "Pools",
+            "Camping", "Farms", "Arctic", "Boats", "Camper Vans"
+        ];
+        if (!allowedCategories.includes(category)) {
+            req.flash("error", "Invalid category");
+            return res.redirect("/listing");
+        }
+
+        const listings = await Listing.find({ category });
+        res.render("listings/category", { listings, category });
+    } catch (err) {
+        console.error(err);
+        req.flash("error", "Something went wrong");
+        res.redirect("/listing");
+    }
+};

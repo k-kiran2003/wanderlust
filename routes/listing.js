@@ -32,7 +32,8 @@ router.route("/")
 //     .post(upload.single('listing[image]'), (req,res)=>{
 //     res.send(req.file);
 // });
-
+//search
+router.get("/category", listingController.category);
 
 router
     .route("/:id")
@@ -43,6 +44,9 @@ router
 
 // Edit Listing Form
 router.get("/:id/edit", isLogged, isOwner, wrapAsync(listingController.editForm));
+
+
+
 module.exports = router;
 
 

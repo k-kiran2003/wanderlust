@@ -1,0 +1,28 @@
+
+<% layout("layouts/boilerplate") %>
+
+    
+
+    <ul>
+        <% listings.forEach(listing=> { %>
+            <li>
+                <h2>
+                    <%= listing.title %>
+                </h2>
+                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="image">
+                <p>
+                    Owned by - <b><i> <%= listing.owner.username %></i></b>
+                <p>
+                <p>
+                    <%= listing.location %> </p>
+                <p>
+                    <%= listing.country %>
+                    </p>
+                
+                    <%= listing.description %>
+                </p>
+                <p>Price: $<%= listing.price %>
+                </p>
+            </li>
+            <% }) %>
+    </ul>

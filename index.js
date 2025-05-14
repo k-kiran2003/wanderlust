@@ -1,6 +1,6 @@
 // require('dotenv').config(); // This loads the .env variables
 require('dotenv').config();
-console.log("MongoDB URI:", process.env.ATLAS); // 👈 TEMP LOG THIS
+// console.log("MongoDB URI:", process.env.ATLAS); // 👈 TEMP LOG THIS
 
 
 // EXPRESS
@@ -53,8 +53,6 @@ main().then(() => {
 async function main() {
     await mongoose.connect(atlasDB);
 }
-
-
 const store = MongoStore.create({
     mongoUrl : atlasDB,
     crypto:{
@@ -68,7 +66,7 @@ store.on("error",()=>{
 //session
 const sessionOptions = {
     store,
-    secret: process.env.SECRE,
+    secret: process.env.SECRET,
       resave: false,
       saveUninitialized:true,
      Cookie:{
@@ -89,7 +87,10 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user
+    res.locals.currUser = req.user;
+  
+   
+    console.log("Current User:", req.user); 
     next();
 });
 // app.get("/demo",async(req,res)=>{
@@ -103,6 +104,7 @@ app.use((req, res, next) => {
 // });
 
 //routes
+
 app.use("/listing",listing);
 app.use("/listing/:id/review",reviewRoute);
 app.use("/",userRouter);
@@ -128,6 +130,8 @@ app.use((err, req, res, next) => {
     res.status(status).render("listings/error",{err});
    
 });
+
+
 // Start Server
 app.listen(8080, () => {
     console.log("App is listening on port 8080");
