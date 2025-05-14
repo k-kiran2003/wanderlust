@@ -1,6 +1,5 @@
 // require('dotenv').config(); // This loads the .env variables
 require('dotenv').config();
-// console.log("MongoDB URI:", process.env.ATLAS); // 👈 TEMP LOG THIS
 
 
 // EXPRESS
@@ -19,7 +18,7 @@ const expressError = require("./utils/expressError.js");
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 //router
-const listing  = require("./routes/listing.js");
+const listing = require("./routes/listing.js");
 const reviewRoute = require("./routes/review.js")
 const userRouter = require("./routes/user.js");
 // EJS-MATE
@@ -54,27 +53,27 @@ async function main() {
     await mongoose.connect(atlasDB);
 }
 const store = MongoStore.create({
-    mongoUrl : atlasDB,
-    crypto:{
+    mongoUrl: atlasDB,
+    crypto: {
         secret: process.env.SECRET,
     },
-    touchAfter : 24 *3600,
+    touchAfter: 24 * 3600,
 });
-store.on("error",()=>{
-    console.log("MONGO STORE ERROR",error);
+store.on("error", () => {
+    console.log("MONGO STORE ERROR", error);
 })
 //session
 const sessionOptions = {
     store,
     secret: process.env.SECRET,
-      resave: false,
-      saveUninitialized:true,
-     Cookie:{
-        expires: Date.now() + 7*24 * 60 *60 * 1000,
-         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly:true
-     }
-    };
+    resave: false,
+    saveUninitialized: true,
+    Cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+};
 
 app.use(session(sessionOptions));
 
@@ -88,9 +87,9 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
-  
-   
-    console.log("Current User:", req.user); 
+
+
+    console.log("Current User:", req.user);
     next();
 });
 // app.get("/demo",async(req,res)=>{
@@ -105,9 +104,9 @@ app.use((req, res, next) => {
 
 //routes
 
-app.use("/listing",listing);
-app.use("/listing/:id/review",reviewRoute);
-app.use("/",userRouter);
+app.use("/listing", listing);
+app.use("/listing/:id/review", reviewRoute);
+app.use("/", userRouter);
 // Sample Route to Insert Dummy Data
 app.get("/testing", wrapAsync(async (req, res) => {
     let sampleData = new Listing({
@@ -121,14 +120,14 @@ app.get("/testing", wrapAsync(async (req, res) => {
     res.send("Sample listing added");
 }));
 
-app.all(/.*/,(req,res,next)=>{
-    next(new expressError(404,"page not found"));
+app.all(/.*/, (req, res, next) => {
+    next(new expressError(404, "page not found"));
 })
 // Error handling middleware
 app.use((err, req, res, next) => {
     let { status = 400, message = "Something went wrong" } = err;
-    res.status(status).render("listings/error",{err});
-   
+    res.status(status).render("listings/error", { err });
+
 });
 
 
