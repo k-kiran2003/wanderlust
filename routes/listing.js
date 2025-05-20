@@ -34,6 +34,7 @@ router.route("/")
 // });
 //search
 router.get("/category", listingController.category);
+router.get("/search", listingController.categoryListing);
 
 router
     .route("/:id")

@@ -1,3 +1,4 @@
+const listing = require("../models/listing");
 const Listing = require("../models/listing");
 
 module.exports.index = (async (req, res) => {
@@ -87,23 +88,38 @@ module.exports.destroyListing = (async (req, res) => {
 });
 //search
 module.exports.category = async (req, res) => {
-    try {
+    
         const { category } = req.query;
 
-        const allowedCategories = [
-            "Mountain-city", "Mountain", "Castle", "Pools",
-            "Camping", "Farms", "Arctic", "Boats", "Camper Vans"
-        ];
-        if (!allowedCategories.includes(category)) {
-            req.flash("error", "Invalid category");
-            return res.redirect("/listing");
-        }
+        // const allowedCategories = [
+        //     "Trending","Mountain-city", "Mountain", "Castle", "Pools",
+        //     "Camping", "Farms", "Arctic", "Boats", "Camper Vans"
+        // ];
+        // if (!allowedCategories.includes(category)) {
+        //     req.flash("error", "Invalid category");
+        //     return res.redirect("/listing");
+        // }
 
         const listings = await Listing.find({ category });
-        res.render("listings/category", { listings, category });
-    } catch (err) {
-        console.error(err);
-        req.flash("error", "Something went wrong");
-        res.redirect("/listing");
-    }
+        if (!listings || listings.length == 0) {
+             req.flash("error","This category has no listings yet");
+            res.redirect("/listing")
+        }
+        else {
+            res.render("listings/category", { listings, category });
+            console.log(listings);
+        }
 };
+
+module.exports.categoryListing = async(req,res)=>{
+   const { category } = req.query;
+   let listings = await Listing.find({category}); 
+    if (!listings || listings.length == 0) {
+        req.flash("error", "This category has no listings yet");
+         res.redirect("/listing");
+    }
+    else{
+        res.render("listings/category",{listings,category });
+        console.log(listings);
+    }
+}
