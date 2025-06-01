@@ -120,9 +120,9 @@ app.get("/testing", wrapAsync(async (req, res) => {
     res.send("Sample listing added");
 }));
 
-app.all(/.*/, (req, res, next) => {
-    next(new expressError(404, "page not found"));
-})
+// app.all(/.*/, (req, res, next) => {
+//     next(new expressError(404, "page not found"));
+// })
 // Error handling middleware
 app.use((err, req, res, next) => {
     let { status = 400, message = "Something went wrong" } = err;
