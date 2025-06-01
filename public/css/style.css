@@ -79,3 +79,14 @@ flex-direction: column;
 .show-img{
     height: 40vh;
 }
+@media (max-width: 768px) {
+  
+    #navbarNavAltMarkup {
+            margin: 2px;
+            /* position: sticky; */
+            background-color: white;
+        }
+   
+
+ 
+}
