@@ -43,6 +43,25 @@ const listingSchema = new mongoose.Schema({
             "Camping", "Farms", "Arctic", "Boats", "Camper Vans"
 ],
     },
+      ManagedBy:{
+        type:String,
+        default:"Host"
+        
+    },
+    Contact:{
+        type:Number,
+        maxlength:10,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    address:{
+        type:String,
+        required:true
+    },
+  
 
 });
 
