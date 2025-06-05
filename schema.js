@@ -11,6 +11,10 @@ module.exports.listingSchema = Joi.object({
         location: Joi.string().required(),
         image: Joi.string().allow("",null),
         category: Joi.string().required(),
+         ManagedBy: Joi.string().required(),
+        Contact: Joi.number().required(),
+        email: Joi.string().required(),
+        address: Joi.string().required(),
     }).required(),
 });
 
