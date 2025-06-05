@@ -35,6 +35,19 @@
 </form>
 </div>
 <% } %>
+ <div class="card col-8 offset-2 mb-3" style="width: 18rem;">
+                <div class="card-body ">
+                    <h3 class="card-title text-danger">Host Details</h3>
+                    
+                    <p class="card-text"><p>Managed By -<b><i>
+                                <%= data.ManagedBy %> <i></b></p>
+                                    <p class="card-text">>Contact - <b>
+                                        <%= data.Contact %>                </b></p>
+                                    <p class="card-text">E-mail - <b>
+                                        <%= data.email %>                </b></p>
+                                    <p class="card-text">Address - <b><%= data.address %></b></p>
+                   
+                </div>        </div>
 <div class="col-8 offset-2 mb-3">
    
 <% if(currUser) { %>
